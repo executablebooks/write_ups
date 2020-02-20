@@ -1,38 +1,43 @@
 ﻿# The Executable Book Project
 
 Over the last several years, Jupyter Notebooks have become a staple in the
-data scientist’s toolkit. As both an interface for interactive computation
-and a document standard for structuring blocks on computational and narrative
-content, notebooks are ubiquitous, flexible, and powerful for a variety of
-tasks involving data and code.
+data scientist's toolkit. As both an interface for interactive computation
+and a document standard for structuring blocks of computational and narrative
+content, notebooks are ubiquitous, flexible, and powerful.
 
-Since their inception, notebooks were aimed at many
-communication processes for scientists and educators, including
-journal publishing pipelines. However, there are still several gaps that
-exist in the current Jupyter Notebook landscape in terms of
+Since their inception, notebooks were aimed at many communication processes
+for scientists and educators, including journal publishing pipelines. However,
+there are still gaps in the current Jupyter Notebook landscape in terms of
 writing and publishing.
 
-With this post we announce the Executable Book Project - a Sloan-funded grant
-to improve the state of writing and publishing with Jupyter Notebooks (and the
-broader open source science ecosystem). The project is a collaboration between
+With this post we announce the Executable Book Project --- a Sloan-funded grant
+to improve the state of writing and publishing with Jupyter Notebooks, along
+with the broader open source science ecosystem. The project is a collaboration between
 Australia National University, UC Berkeley, and Northern Arizona University.
 We’ll cover some of the major challenges we hope to tackle below.
 
-## `tl;dr`: what are we hoping to build?
+## `tl;dr`: What are we hoping to build?
 
 From a user's perspective, this is what we want to enable:
 
-From a single folder with either markdown or Jupyter Notebooks, generate
-a high-quality book from this collection of documents. The book should support
-features common in publishing, such as citations, cross-references, and
-equations. As a part of this process, all executable code in the content files
-should be run (and cached) and included along with the book's outputs. These
-outputs should include high-quality HTML and PDF. Finally, this process
-should be managed by a simple command-line interface that allows users to
-focus on the content creation process, not on the backend stack that runs the
-actual building.
+Generate a high-quality book from a single folder containing either markdown
+or Jupyter notebooks (authors can write in either). The book will support
+common publishing features, such as citations, cross-references, and
+numbered equations. As a part of this process, all executable code in the
+source files will be run, intelligently cached and embedded in the document.
+Book output formats will include HTML and PDF, as well as Jupyter notebooks
+that allow readers to step through and interact with content.
 
-This stack should be entirely open source
+This process will be managed by a simple command-line interface that
+allows users to focus on the content creation process, not on the backend
+stack that runs the actual building.
+
+The author-edit-compile cycle will be smooth and convenient, including
+productivity tools for use in common editors (e.g., code completion).  The
+option of using human-readable text-based source material will facilitate
+version control and distributed collaboration.
+
+This stack should be entirely open source.
 
 ## What are our principles and constraints?
 
@@ -214,8 +219,8 @@ resources).
 
 At the end of this process, we have two different collections of items: the
 source files that have been written by the author, and a cache of notebooks
-that are fully-populated with content and enriched metadata. It is now time to
-build these tools and produce some outputs.
+that are fully-populated with content and enriched metadata. The next step is to
+produce some outputs.
 
 ## How can we improve publishing with notebooks?
 
@@ -259,14 +264,14 @@ professional-looking documents. However, it is known for being difficult
 to configure just the way you want it.
 
 We plan to incorporate out-of-the-box support for first-class PDF outputs
-when building your book. This will leverage a collection of Latex templates
+when building your book. This will leverage a collection of LaTeX templates
 and configurations that are bundled with the book build system. The output
 should be something that is almost ready to send off to a publisher.
 
 ## Tying it all together
 
-Finally, as you can see, there is a lot of complexity in all of the above
-steps. The final thing that we will build as a part of this project is a
+As you can see, there is much complexity in the steps above. 
+The final thing that we will build as a part of this project is a
 command-line tool that controls the entire process. Given a collection of
 content files (and perhaps a configuration file), it will manage the
 execution and cacheing, the sphinx build process, and generate outputs for
