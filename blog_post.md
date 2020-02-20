@@ -18,6 +18,52 @@ broader open source science ecosystem). The project is a collaboration between
 Australia National University, UC Berkeley, and Northern Arizona University.
 We’ll cover some of the major challenges we hope to tackle below.
 
+## `tl;dr`: what are we hoping to build?
+
+From a user's perspective, this is what we want to enable:
+
+From a single folder with either markdown or Jupyter Notebooks, generate
+a high-quality book from this collection of documents. The book should support
+features common in publishing, such as citations, cross-references, and
+equations. As a part of this process, all executable code in the content files
+should be run (and cached) and included along with the book's outputs. These
+outputs should include high-quality HTML and PDF. Finally, this process
+should be managed by a simple command-line interface that allows users to
+focus on the content creation process, not on the backend stack that runs the
+actual building.
+
+This stack should be entirely open source
+
+## What are our principles and constraints?
+
+In running this project, we aim to adhere to several principles that we believe
+will result in higher-quality technology that aligns with the core principles
+of the open source community. Here are a few key components:
+
+* **Support casual users equally to power users**. Complicating the feature
+  space to support a "power user feature" should be done with great care.
+* **Build modular components that are useful elsewhere**. Rather than building
+  a single vertical stack, find parts of the workflow that naturally separate.
+  Create modular tools for these parts so that they may benefit the community
+  outside of the context of building interactive books.
+* **Use pre-existing technology where possible**. Rather than re-inventing
+  the wheel, make every effort to utilize pre-existing open source tech.
+* **Use pre-existing standards where possible**. In the event that we must
+  create new patterns of content creation or tooling, utilize prior art in
+  the open source community as much as possible, especially whne it comes to
+  markup languages.
+* **Contribute improvements upstream**. Where we utilize pre-existing tools,
+  contribute improvements to them as we build off of them for this project.
+* **Design for the future**. While we have a bit of funding now, it won't last
+  forever. This means the technology should be easy for potential developers
+  to read, understand, and modify/improve.
+* **Users should not need to know anything about the build system**. If they
+  want to dig into the guts of our infrastructure, they can, but knowledge
+  of Sphinx, Latex, etc should not be a requirement. They should only need to
+  use a simple tool to control the process.
+* **Don't try to do everything**. Focusing our tools on publishing
+  computational documents with reasonable choices made for the user.
+
 ## What does it mean to publish executable documents?
 
 We think of this process in three main parts: authoring, execution, and
@@ -32,7 +78,7 @@ cross-references.
 Execution occurs after the author has written their content and wants to
 prepare it for publishing. In this step, all executable content needs to be
 run against one or more languages. Authors may or may not want to run
-everything each time they publish, depending on how long the components take to 
+everything each time they publish, depending on how long the components take to
 run.
 
 Publishing occurs once all of the content has been written and run. It is the
@@ -65,9 +111,9 @@ our next point...
 ### Extend Jupyter’s markup syntax
 
 The biggest challenge that Jupyter Notebooks face when it comes to authoring
-is that the language in which users write their content 
+is that the language in which users write their content
 --- a community-accepted flavor of markdown called CommonMark ---
-doesn’t have many of the features one needs for publishing. 
+doesn’t have many of the features one needs for publishing.
 For example, CommonMark doesn’t have native support for citations and
 equations. More generally, it has no natural means to extend its
 functionality in new directions.
@@ -171,4 +217,58 @@ source files that have been written by the author, and a cache of notebooks
 that are fully-populated with content and enriched metadata. It is now time to
 build these tools and produce some outputs.
 
-## Improving the publishing process
+## How can we improve publishing with notebooks?
+
+Now that we have enriched content in text-based source files, as well as
+the cached outputs that are generated from running this content, it is
+time to utilize Sphinx to generate a book from our documents.
+
+### A native `ipynb` parser for Sphinx
+
+First, since some content will be written directly in notebooks, it will need
+to be natively read into Sphinx. There have been a few attempts at
+`ipynb` parsers in the Sphinx ecosystem. However, with the addition of
+the extended markdown syntax mentioned above, we can leverage this tool to
+make notebooks a first-class citizen in Sphinx.
+
+We plan to build a native `ipynb` reader for the Sphinx ecosystem. This tool
+will parse all notebook markdown blocks with our extended markdown parser,
+and will insert cached outputs from running each cell into the Sphinx document.
+This means that users will also be able to leverage Sphinx directives and
+roles from within Notebook markdown.
+
+### Create first class HTML output with Jupyter Book
+
+Once Sphinx generates a document from our collection of source files, we can
+use it to generate a number of outputs. One of the most popular is a
+**bundle of HTML**. This is a website that has the look-and-feel of a book,
+and many interactive features that improve the reading experience.
+
+We plan to leverage the Jupyter Book project to provide a modern, web-based
+book outputs for this build system. This involves taking the CSS and Javascript
+from the current Jupyter Book implementation and incorporating it into a
+Sphinx theme. This theme could work on its own, or as a part of the build
+process described in this post.
+
+### Create first-class PDF output
+
+Another common need for authors is to create publication-quality PDFs of
+their content. For this purpose, Latex is the right tool for the job. Latex
+provides an extreme level of configurability and consistently outputs
+professional-looking documents. However, it is known for being difficult
+to configure just the way you want it.
+
+We plan to incorporate out-of-the-box support for first-class PDF outputs
+when building your book. This will leverage a collection of Latex templates
+and configurations that are bundled with the book build system. The output
+should be something that is almost ready to send off to a publisher.
+
+## Tying it all together
+
+Finally, as you can see, there is a lot of complexity in all of the above
+steps. The final thing that we will build as a part of this project is a
+command-line tool that controls the entire process. Given a collection of
+content files (and perhaps a configuration file), it will manage the
+execution and cacheing, the sphinx build process, and generate outputs for
+the latest set of book files. This should be a fairly simple tool that
+is user-friendly and has reasonable defaults.
