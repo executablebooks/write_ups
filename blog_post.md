@@ -10,32 +10,31 @@ for scientists and educators, including journal publishing pipelines. However,
 there are still gaps in the current Jupyter Notebook landscape in terms of
 writing and publishing.
 
-With this post we announce the Executable Book Project --- a Sloan-funded grant
+With this post we announce the Executable Book Project — a Sloan-funded grant
 to improve the state of writing and publishing with Jupyter Notebooks, along
 with the broader open source science ecosystem. The project is a collaboration between
-Australia National University, UC Berkeley, and Northern Arizona University.
+the Australian National University, UC Berkeley, and Northern Arizona University.
 We’ll cover some of the major challenges we hope to tackle below.
 
 ## `tl;dr`: What are we hoping to build?
 
-From a user's perspective, this is what we want to enable:
+From a user's perspective, we want to enable:
 
-Generate a high-quality book from a single folder containing either markdown
-or Jupyter notebooks (authors can write in either). The book will support
+**Generation of a high-quality book from a single folder containing either markdown
+or Jupyter notebooks** (authors can write in either). The book will support
 common publishing features, such as citations, cross-references, and
 numbered equations. As a part of this process, all executable code in the
 source files will be run, intelligently cached and embedded in the document.
 Book output formats will include HTML and PDF, as well as Jupyter notebooks
 that allow readers to step through and interact with content.
 
-This process will be managed by a simple command-line interface that
-allows users to focus on the content creation process, not on the backend
-stack that runs the actual building.
+**A simple command-line interface** that allows users to focus on the content creation
+process, not on the backend stack that runs the actual building.
 
-The author-edit-compile cycle will be smooth and convenient, including
-productivity tools for use in common editors (e.g., code completion).  The
-option of using human-readable text-based source material will facilitate
-version control and distributed collaboration.
+**A smooth and convenient author-edit-compile cycle**, including productivity tools
+for use in common editors (e.g., code completion).  The option of using
+human-readable text-based source material will facilitate version control
+and distributed collaboration.
 
 This stack should be entirely open source.
 
@@ -55,7 +54,7 @@ of the open source community. Here are a few key components:
   the wheel, make every effort to utilize pre-existing open source tech.
 * **Use pre-existing standards where possible**. In the event that we must
   create new patterns of content creation or tooling, utilize prior art in
-  the open source community as much as possible, especially whne it comes to
+  the open source community as much as possible, especially when it comes to
   markup languages.
 * **Contribute improvements upstream**. Where we utilize pre-existing tools,
   contribute improvements to them as we build off of them for this project.
@@ -66,7 +65,7 @@ of the open source community. Here are a few key components:
   want to dig into the guts of our infrastructure, they can, but knowledge
   of Sphinx, Latex, etc should not be a requirement. They should only need to
   use a simple tool to control the process.
-* **Don't try to do everything**. Focusing our tools on publishing
+* **Don't try to do everything**. Focus our tools on publishing
   computational documents with reasonable choices made for the user.
 
 ## What does it mean to publish executable documents?
@@ -117,7 +116,7 @@ our next point...
 
 The biggest challenge that Jupyter Notebooks face when it comes to authoring
 is that the language in which users write their content
---- a community-accepted flavor of markdown called CommonMark ---
+— a community-accepted flavor of markdown called CommonMark —
 doesn’t have many of the features one needs for publishing.
 For example, CommonMark doesn’t have native support for citations and
 equations. More generally, it has no natural means to extend its
@@ -137,7 +136,7 @@ documents themselves, putting a strain on collaborative workflows with
 co-authors. For this reason, we wish to improve collaborative workflows while
 authoring documents.
 
-### Create two-way conversions between text and ipynb files
+### Create two-way conversions between text and `ipynb` files
 
 Authors often wish to collaborate with others. The Jupyter
 Notebook format inhibits this process when common collaborative tools such as GitHub are
@@ -146,7 +145,7 @@ content*, as opposed to the JSON bundles that Jupyter Notebooks provide.
 
 We wish to create a text-based representation of notebooks. This should
 utilize the extended markdown syntax we descibe above, and provide options for
-two-way conversion between ipynb files and their text-based format. This will
+two-way conversion between `ipynb` files and their text-based format. This will
 hopefully leverage pre-existing tools for text-based synchronization in the
 Jupyter landscape, such as the Jupytext package for two-way sync.
 
@@ -165,15 +164,15 @@ ecosystem. This will allow for the rapid, enriched feedback described above in
 an interface agnostic fashion (most modern editors support implementations in
 the LSP protocol).
 
-### Wrapping up
+### Authoring: wrap-up
 
 At the end of this process, authors will have a folder full of content they
-have created. It will be written in either “IPYNB” or “markdown” files, and
+have created. It will be written in either “ipynb” or “markdown” files, and
 will contain an extended markdown syntax that can be used within the Sphinx
 ecosystem for publishing. Now it is time to execute this computational
 content and populate the notebooks with their outputs.
 
-## How can we improve executing and cacheing.
+## How can we improve executing and caching?
 
 In order to efficiently execute a collection of notebooks, we need the ability
 to represent collections of notebooks, to determine whether it is necessary to
@@ -193,7 +192,7 @@ Notebooks. These should exist in an abstract fashion that is agnostic to the
 way in which the notebooks are stored. For example, it should be possible for
 developers to write plugins that connect notebooks with local filesystems,
 cloud storage, or a database. This will be a generically-useful tool that we
-will utilize as a part of the build, but also aim to be useful across many
+will utilize as a part of the build, but also intend to be useful across many
 other projects as well.
 
 Once notebooks are stored in a cache, we also wish to execute their code and
@@ -208,19 +207,19 @@ wasting time re-executing code. We don’t even want this to happen every time
 you change your book content. For example, what if you only changed a period
 or altered a word? That shouldn’t change the outputs of running any code.
 
-We plan to build an efficient execution engine that builds upon the cacheling
+We plan to build an efficient execution engine that builds upon the caching
 layer described above. It will compare the notebook cache against any new
 additions that are made to the original content files. It will then execute
 the content inside those notebooks in an efficient manner (ideally, this will
 also be pluggable in order to leverage different kinds of computational
 resources).
 
-### Wrapping up
+### Execution: wrap-up
 
 At the end of this process, we have two different collections of items: the
 source files that have been written by the author, and a cache of notebooks
 that are fully-populated with content and enriched metadata. The next step is to
-produce some outputs.
+publish the final product.
 
 ## How can we improve publishing with notebooks?
 
@@ -242,7 +241,7 @@ and will insert cached outputs from running each cell into the Sphinx document.
 This means that users will also be able to leverage Sphinx directives and
 roles from within Notebook markdown.
 
-### Create first class HTML output with Jupyter Book
+### Create first-class HTML output with Jupyter Book
 
 Once Sphinx generates a document from our collection of source files, we can
 use it to generate a number of outputs. One of the most popular is a
@@ -274,6 +273,6 @@ As you can see, there is much complexity in the steps above.
 The final thing that we will build as a part of this project is a
 command-line tool that controls the entire process. Given a collection of
 content files (and perhaps a configuration file), it will manage the
-execution and cacheing, the sphinx build process, and generate outputs for
+execution and caching, the sphinx build process, and generate outputs for
 the latest set of book files. This should be a fairly simple tool that
 is user-friendly and has reasonable defaults.
